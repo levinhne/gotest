@@ -22,7 +22,14 @@ type B struct {
 	V int
 }
 
-func NewB() *B {
+type BParam struct {
+	fx.In
+
+	Logger *zap.Logger
+}
+
+func NewB(param BParam) *B {
+	param.Logger.Info("ojojojoj")
 	return &B{
 		V: 1,
 	}
