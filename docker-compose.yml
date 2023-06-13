@@ -13,16 +13,19 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
-  # cockroach:
-  #   image: cockroachdb/cockroach
-  #   ports:
-  #    - "26257:26257"
-  #    - "8080:8080"
-  #   networks:
-  #     - postgres
-  #   command: start-single-node --insecure
-  #   volumes:
-  #    - "${PWD}/cockroach-data/cockroach:/cockroach/cockroach-data"
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      - mongodb:/data/mongodb
 
 volumes:
   postgres:
+  mongodb:
